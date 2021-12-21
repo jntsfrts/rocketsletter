@@ -1,13 +1,10 @@
 package br.com.rocketsletter.user;
 
-import br.com.rocketsletter.email.Email;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -20,15 +17,24 @@ public class UserController {
     private UserMapper mapper;
 
     @PostMapping("/new")
-    public ResponseEntity<UserDTO> addUser(@RequestBody UserCreationDTO userCreationDTO) {
+    public ResponseEntity<UserResponseDTO> addUser(@RequestBody UserCreationDTO userCreationDTO) {
 
-        User user = null;
         try {
-            user = service.saveUser(mapper.toUser(userCreationDTO));
-        } catch (Exception e) {
+            User user = service.saveUser(mapper.toUser(userCreationDTO));
+            return new ResponseEntity<>(mapper.toDTO(user), HttpStatus.CREATED);
+        } catch (DataAccessException | UserAlreadyExistsException e) {
             e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(mapper.toDTO(user), HttpStatus.OK);
+    }
+
+    /*
+    A ideia é essa URL funcionar com um botao 'unsubscribe'
+    contendo um ID que acompanhará o email diário.
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteUser(@PathVariable Integer id) {
+        return service.deleteUser(id);
     }
 }

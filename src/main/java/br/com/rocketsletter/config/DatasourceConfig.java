@@ -21,14 +21,39 @@ public class DatasourceConfig {
     public HikariDataSource hikariDataSource() {
 
         HikariDataSource datasource = new HikariDataSource();
-        datasource.setJdbcUrl(jdbcUrl);
-        datasource.setUsername(username);
-        datasource.setPassword(password);
+        datasource.setJdbcUrl(getJdbcUrl());
+        datasource.setUsername(getUsername());
+        datasource.setPassword(getPassword());
+
         return datasource;
     }
 
     @Bean
     public JdbcTemplate jdbcTemplate(HikariDataSource hikariDataSource) {
         return new JdbcTemplate(hikariDataSource);
+    }
+
+    public String getJdbcUrl() {
+        return jdbcUrl;
+    }
+
+    public void setJdbcUrl(String jdbcUrl) {
+        this.jdbcUrl = jdbcUrl;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

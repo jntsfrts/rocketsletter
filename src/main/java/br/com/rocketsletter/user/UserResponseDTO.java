@@ -2,13 +2,16 @@ package br.com.rocketsletter.user;
 
 import java.time.LocalDateTime;
 
-public class UserDTO {
+public class UserResponseDTO {
 
     private String email;
     private final LocalDateTime createdAt;
 
+    public UserResponseDTO() {
+        this.createdAt = null;
+    }
 
-    public UserDTO(User user) {
+    public UserResponseDTO(User user) {
         this.email = user.getEmail().getAddress();
         this.createdAt = user.getCreatedAt();
     }

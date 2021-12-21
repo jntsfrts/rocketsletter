@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapper {
 
-    public UserDTO toDTO(User user) {
-        return new UserDTO(user);
+    public UserResponseDTO toDTO(User user) {
+        return new UserResponseDTO(user);
     }
 
     public User toUser(UserCreationDTO userDTO) {

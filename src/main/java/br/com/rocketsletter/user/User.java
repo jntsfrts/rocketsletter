@@ -4,6 +4,7 @@ import br.com.rocketsletter.email.Email;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -13,18 +14,28 @@ public class User {
 
     private Integer id;
     private Email email;
-    private final LocalDateTime createdAt;
+    private LocalDateTime createdAt;
+
+
+    public User() {
+
+    }
+
+    public User(Integer id, Email email, LocalDateTime createdAt) {
+        this.id = id;
+        this.email = email;
+        this.createdAt = createdAt;
+    }
 
     public User(Email email) {
         this.email = email;
-        this.createdAt = LocalDateTime.now();
     }
 
     public Integer getId() {
         return id;
     }
 
-     Email getEmail() {
+     public Email getEmail() {
         return email;
     }
 
@@ -34,6 +45,14 @@ public class User {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Timestamp getCreatedAtInTimestamp() {
+        return Timestamp.valueOf(createdAt);
     }
 
     @Override
