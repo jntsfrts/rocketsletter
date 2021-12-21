@@ -4,20 +4,13 @@ import br.com.rocketsletter.email.Email;
 import br.com.rocketsletter.user.User;
 import br.com.rocketsletter.user.UserAlreadyExistsException;
 import br.com.rocketsletter.user.UserDAO;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import jdk.jshell.spi.ExecutionControl;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.rocketsletter.user.UserRowMapper;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 @Repository
 public class UserDataAccessService implements UserDAO {
@@ -47,10 +40,9 @@ public class UserDataAccessService implements UserDAO {
         var sql = "SELECT id, email_address, created_at FROM user WHERE email_address = ? ";
 
         try {
-            return jdbcTemplate.queryForObject(sql, ((resultSet, rowNum) -> new User(resultSet.getInt("id"),
-                    new Email(resultSet.getString("email_address")),
-                    resultSet.getTimestamp("created_at").toLocalDateTime()
-            )), email.getAddress());
+            return jdbcTemplate.queryForObject(sql, (resultSet, rowNum) ->
+                    new UserRowMapper().mapRow(resultSet, rowNum),
+                    email.getAddress());
 
         } catch (EmptyResultDataAccessException exception) {
             return new User();
