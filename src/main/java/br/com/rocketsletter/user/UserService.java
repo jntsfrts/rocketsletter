@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -18,6 +19,11 @@ public class UserService {
             user.setCreatedAt(LocalDateTime.now());
 
         return userDAO.saveUser(user);
+    }
+
+    public List<User> findAll() {
+
+        return userDAO.findAll();
     }
 
     public ResponseEntity deleteUser(Integer id) {

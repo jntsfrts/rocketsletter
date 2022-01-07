@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class UserDataAccessService implements UserDAO {
 
@@ -34,6 +36,16 @@ public class UserDataAccessService implements UserDAO {
         }
 
         throw new UserAlreadyExistsException(user);
+    }
+
+    @Override
+    public List<User> findAll() {
+        var sql = "SELECT id, email_address, created_at FROM user ";
+
+        return jdbcTemplate.query(
+                sql, (resultSet, rowNum) ->
+                    new UserRowMapper().mapRow(resultSet, rowNum)
+        );
     }
 
     public User findBy(Email email) {
