@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public class Launch {
 
-    private String name;
+    private String title;
     private Status status;
     private Mission mission;
 
@@ -14,38 +14,38 @@ public class Launch {
     LocalDateTime windowStart;
 
     @JsonAlias("window_end")
-    LocalDateTime windowsEnd;
+    LocalDateTime windowEnd;
 
-    static class Status {
-        String name;
+    public static class Status {
+        String statusDescription;
 
-        public String getName() {
-            return name;
+        public String getStatusDescription() {
+            return statusDescription;
         }
 
-        public void setName(String name) {
-            this.name = name;
-        }
-    }
-
-    static class Mission {
-        String description;
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
+        public void setStatusDescription(String statusDescription) {
+            this.statusDescription = statusDescription;
         }
     }
 
-    public String getName() {
-        return name;
+    public static class Mission {
+        String missionDescription;
+
+        public String getMissionDescription() {
+            return missionDescription;
+        }
+
+        public void setMissionDescription(String missionDescription) {
+            this.missionDescription = missionDescription;
+        }
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Status getStatus() {
@@ -72,11 +72,11 @@ public class Launch {
         this.windowStart = windowStart;
     }
 
-    public LocalDateTime getWindowsEnd() {
-        return windowsEnd;
+    public LocalDateTime getWindowEnd() {
+        return windowEnd;
     }
 
-    public void setWindowsEnd(LocalDateTime windowsEnd) {
-        this.windowsEnd = windowsEnd;
+    public void setWindowEnd(LocalDateTime windowEnd) {
+        this.windowEnd = windowEnd;
     }
 }

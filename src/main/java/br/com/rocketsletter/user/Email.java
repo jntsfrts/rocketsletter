@@ -1,4 +1,4 @@
-package br.com.rocketsletter.email;
+package br.com.rocketsletter.user;
 
 public class Email {
 

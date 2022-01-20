@@ -14,16 +14,15 @@ import java.util.Objects;
 @Service
 public class LaunchService {
 
-    public List<Launch> getTodaysLaunches() throws NoLaunchTodayException {
+    public List<Launch> getLaunchesOfTheDay() throws NoLaunchTodayException {
 
-        List<Launch> todaysLaunches = filterTodaysLaunches(getUpcomingLaunches());
+        List<Launch> todaysLaunches = filterLauchesOfTheDay(getUpcomingLaunches());
 
         if(todaysLaunches.isEmpty()) {
             throw new NoLaunchTodayException();
         }
 
         return todaysLaunches;
-
     }
 
     private List<Launch> getUpcomingLaunches() {
@@ -43,13 +42,17 @@ public class LaunchService {
         return Objects.requireNonNull(response.getBody()).getLaunches();
     }
 
-    private List<Launch> filterTodaysLaunches(List<Launch> launches) {
+    private List<Launch> filterLauchesOfTheDay(List<Launch> launches) {
 
         List<Launch> todaysLaunches = new ArrayList<>();
-        int today = LocalDate.now().getDayOfMonth();
+        LocalDate today = LocalDate.now();
+
+        LocalDate day = LocalDate.now();
+        LocalDate anotherDayInTheDark = LocalDate.now();
+
 
         launches.forEach(launch -> {
-            if(launch.getWindowStart().getDayOfMonth() == today) {
+            if(launch.getWindowStart().equals(today)) {
                 todaysLaunches.add(launch);
             }
         });
