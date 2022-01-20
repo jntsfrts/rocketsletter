@@ -1,13 +1,7 @@
 package br.com.rocketsletter.user;
 
-import br.com.rocketsletter.email.Email;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Locale;
 import java.util.Objects;
 
 public class User {

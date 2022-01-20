@@ -1,6 +1,5 @@
 package br.com.rocketsletter.user;
 
-import br.com.rocketsletter.email.Email;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

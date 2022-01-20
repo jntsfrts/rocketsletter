@@ -1,6 +1,6 @@
 package br.com.rocketsletter.user.impl;
 
-import br.com.rocketsletter.email.Email;
+import br.com.rocketsletter.user.Email;
 import br.com.rocketsletter.user.User;
 import br.com.rocketsletter.user.UserAlreadyExistsException;
 import br.com.rocketsletter.user.UserDAO;

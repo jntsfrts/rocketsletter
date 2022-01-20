@@ -1,7 +1,5 @@
 package br.com.rocketsletter.user;
 
-import br.com.rocketsletter.email.Email;
-
 public class UserAlreadyExistsException extends RuntimeException {
 
     public UserAlreadyExistsException(User user) {

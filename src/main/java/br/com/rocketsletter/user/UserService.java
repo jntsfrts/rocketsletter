@@ -14,7 +14,6 @@ public class UserService {
     private UserDAO userDAO;
 
     public User saveUser(User user) {
-
         if(user.getCreatedAt() == null)
             user.setCreatedAt(LocalDateTime.now());
 
@@ -22,7 +21,6 @@ public class UserService {
     }
 
     public List<User> findAll() {
-
         return userDAO.findAll();
     }
 
