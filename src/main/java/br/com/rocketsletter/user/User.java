@@ -15,6 +15,13 @@ public class User {
 
     }
 
+    public User(Integer id, Email email) {
+        this.id = id;
+        this.email = email;
+        this.createdAt = LocalDateTime.now();
+    }
+
+    //TODO: Separar entidade user para um dto
     public User(Integer id, Email email, LocalDateTime createdAt) {
         this.id = id;
         this.email = email;

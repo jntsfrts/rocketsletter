@@ -3,11 +3,11 @@ package br.com.rocketsletter.message;
 import br.com.rocketsletter.launch.Launch;
 import br.com.rocketsletter.launch.LaunchService;
 import br.com.rocketsletter.launch.NoLaunchTodayException;
+import br.com.rocketsletter.user.Email;
 import br.com.rocketsletter.user.User;
 import br.com.rocketsletter.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,7 +17,9 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +35,7 @@ public class MessageService {
     private UserService userService;
 
     @Autowired
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
     @Value("${spring.mail.username}")
     private String senderAddress;
@@ -49,7 +51,7 @@ public class MessageService {
     //@Scheduled(cron = "42 06 07 * * MON-FRI")
     public void sendDailyMessage() {
 
-        List<Launch> launchesOfTheDay = new ArrayList<>();
+        List<Launch> launchesOfTheDay;
         try {
             launchesOfTheDay = launchService.getLaunchesOfTheDay();
         } catch(NoLaunchTodayException exception) {
@@ -58,7 +60,6 @@ public class MessageService {
         }
 
         List<User> recipients = userService.findAll();
-
 
         try {
             sendMessage(recipients, launchesOfTheDay);
@@ -74,16 +75,15 @@ public class MessageService {
         Context thymeleafContext = new Context();
         thymeleafContext.setVariables(templateModel);
         String htmlBody = thymeleafTemplateEngine.process(
-                "upcoming-launches-email.html", thymeleafContext);
+                "daily-email-template.html", thymeleafContext);
 
-        //TODO design do template
-        //TODO lógica de envio.
 
-//        for(User recipient : recipients) {
-//            sendHtmlMessage(recipient, "blabla", htmlBody);
-//        }
-
-   //     sendHtmlMessage(to, subject, htmlBody);
+        for(User recipient : recipients) {
+            sendHtmlMessage(recipient.getEmail().getAddress(),
+                    "Próximos Lançamentos de Veículos Espaciais | "
+                            + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    htmlBody);
+        }
     }
 
 
@@ -106,75 +106,55 @@ public class MessageService {
         return templateModel;
     }
 
-
-
-    public void sendMessageOld(List<Message> messages) {
-
-        SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo("jonatasfreitas20@gmail.com");
-        msg.setSubject("Teste de email com Spring");
-        msg.setText("Hello World! \n From Springboot!!!");
-
-        mailSender.send(msg);
-    }
-
-    public void sendMessageOld() {
-        System.out.println("[INIT] Enviando mensagem de teste...");
-        SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo("jonatasfreitas20@gmail.com");
-        msg.setSubject("Teste de email com Spring");
-        msg.setText("Hello World! \n From Springboot!!!");
-
-        mailSender.send(msg);
-        System.out.println("[END] Mensagem de teste enviada...");
-    }
-
-
-
-
-
-    
     private String getSenderAddress() {
         return senderAddress;
     }
 
 
 
-    @Scheduled(cron = "*/7 * * * * MON-FRI" )
+    @Scheduled(cron = "*/4 * * * * MON-FRI" )
     public void teste() throws MessagingException {
 
-        //sendMessage();
-        //File file = ResourceUtils.getFile("src/main/resources/templates/simple-email-template.html");
-        //InputStream in = new FileInputStream(file);
-        String location = "/home/jonatasf/Code/projects/rocketsletter/src/main/resources/templates/simple-email-template.html";
-
-        StringBuilder contentBuilder = new StringBuilder();
-        try (BufferedReader in = new BufferedReader(new FileReader(location))){
-            String str;
-            while((str = in.readLine()) != null) {
-                contentBuilder.append(str);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String content = contentBuilder.toString();
-
-        sendHtmlMessage("jonatasfreitas20@gmail.com", "testando html email", content);
-        System.out.println("Email enviado.");
-//        List<Launch> response = new ArrayList<>();
-//        try {
-//            response = launchService.getTodaysLaunches();
-//        } catch (NoLaunchTodayException e) {
-//            e.printStackTrace();
-//        }
+        List<Launch> launches = getFakeLaunches();
+        //List<Launch> launches = launchService.getLaunchesOfTheDay();
+        List<User> recipients = new ArrayList<>();
+        //launches.add(new Launch("Teste Thymeleaf"));
+        recipients.add(new User(1, new Email("jonatasfreitas20@gmail.com")));
 
 
-//
-//        System.out.println("Nome: " + response.getBody().getLaunches().get(0).getName());
-//        System.out.println("Status: " + response.getBody().getLaunches().get(0).getStatus().getName());
-//        System.out.println("Window Start: " + response.getBody().getLaunches().get(0).getWindowStart().toString());
+        sendMessage(recipients, launches);
+        System.out.println("Mensagem enviada para " + recipients.get(0).getEmail().getAddress() + ".");
 
-        //System.out.println("Mission: " + response.getBody().getLaunches().get(0).getMission().getDescription());
+    }
+
+    private List<Launch> getFakeLaunches() {
+        Launch l1 = new Launch();
+        l1.setTitle("Falcon 9 - Starlink");
+        l1.setWindowStart(LocalDateTime.now());
+        l1.setWindowEnd(LocalDateTime.now().plusDays(1));
+        l1.setStatus(new Launch.Status());
+        l1.getStatus().setStatusDescription("Go for launch");
+
+        Launch l2 = new Launch();
+        l2.setTitle("Starship - Mars Mission");
+        l2.setWindowStart(LocalDateTime.now().plusHours(1));
+        l2.setWindowEnd(LocalDateTime.now().plusDays(2));
+        l2.setStatus(new Launch.Status());
+        l2.getStatus().setStatusDescription("Go for launch");
+
+        Launch l3 = new Launch();
+        l3.setTitle("Artemis - Moon Mission");
+        l3.setWindowStart(LocalDateTime.now().plusHours(2));
+        l3.setWindowEnd(LocalDateTime.now().plusDays(1));
+        l3.setStatus(new Launch.Status());
+        l3.getStatus().setStatusDescription("Go for launch");
+
+        List<Launch> launches = new ArrayList<>();
+        launches.add(l1);
+        launches.add(l2);
+        launches.add(l3);
+
+        return launches;
     }
 
 }

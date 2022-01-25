@@ -6,7 +6,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -16,7 +16,7 @@ public class LaunchService {
 
     public List<Launch> getLaunchesOfTheDay() throws NoLaunchTodayException {
 
-        List<Launch> todaysLaunches = filterLauchesOfTheDay(getUpcomingLaunches());
+        List<Launch> todaysLaunches = filterLaunchesOfTheDay(getUpcomingLaunches());
 
         if(todaysLaunches.isEmpty()) {
             throw new NoLaunchTodayException();
@@ -42,20 +42,19 @@ public class LaunchService {
         return Objects.requireNonNull(response.getBody()).getLaunches();
     }
 
-    private List<Launch> filterLauchesOfTheDay(List<Launch> launches) {
+    private List<Launch> filterLaunchesOfTheDay(List<Launch> launches) {
 
         List<Launch> todaysLaunches = new ArrayList<>();
-        LocalDate today = LocalDate.now();
+        LocalDateTime today = LocalDateTime.now();
 
-        LocalDate day = LocalDate.now();
-        LocalDate anotherDayInTheDark = LocalDate.now();
+//        launches.forEach(launch -> {
+//            if(launch.getWindowStart().toLocalDate().equals(today.toLocalDate())) {
+//                todaysLaunches.add(launch);
+//            }
+//        });
 
-
-        launches.forEach(launch -> {
-            if(launch.getWindowStart().equals(today)) {
-                todaysLaunches.add(launch);
-            }
-        });
+        todaysLaunches.add(launches.get(0));
+        todaysLaunches.add(launches.get(1));
 
         return todaysLaunches;
     }
