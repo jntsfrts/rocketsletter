@@ -14,8 +14,16 @@ public class UserService {
     private UserDAO userDAO;
 
     public User saveUser(User user) {
-        if(user.getCreatedAt() == null)
+
+        User result = userDAO.findBy(user.getEmail());
+
+        if(result.getId() != null) {
+            throw new UserAlreadyExistsException();
+        }
+
+        if(user.getCreatedAt() == null) {
             user.setCreatedAt(LocalDateTime.now());
+        }
 
         return userDAO.saveUser(user);
     }

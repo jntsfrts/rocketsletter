@@ -106,10 +106,6 @@ public class MessageService {
         return templateModel;
     }
 
-    private String getSenderAddress() {
-        return senderAddress;
-    }
-
 
 
     @Scheduled(cron = "*/4 * * * * MON-FRI" )
@@ -128,33 +124,30 @@ public class MessageService {
     }
 
     private List<Launch> getFakeLaunches() {
+
         Launch l1 = new Launch();
         l1.setTitle("Falcon 9 - Starlink");
-        l1.setWindowStart(LocalDateTime.now());
-        l1.setWindowEnd(LocalDateTime.now().plusDays(1));
-        l1.setStatus(new Launch.Status());
-        l1.getStatus().setStatusDescription("Go for launch");
-
         Launch l2 = new Launch();
         l2.setTitle("Starship - Mars Mission");
-        l2.setWindowStart(LocalDateTime.now().plusHours(1));
-        l2.setWindowEnd(LocalDateTime.now().plusDays(2));
-        l2.setStatus(new Launch.Status());
-        l2.getStatus().setStatusDescription("Go for launch");
-
         Launch l3 = new Launch();
         l3.setTitle("Artemis - Moon Mission");
-        l3.setWindowStart(LocalDateTime.now().plusHours(2));
-        l3.setWindowEnd(LocalDateTime.now().plusDays(1));
-        l3.setStatus(new Launch.Status());
-        l3.getStatus().setStatusDescription("Go for launch");
 
         List<Launch> launches = new ArrayList<>();
+
         launches.add(l1);
         launches.add(l2);
         launches.add(l3);
 
+        for (Launch launch : launches) {
+            launch.setWindowStart(LocalDateTime.now());
+            launch.setWindowEnd(LocalDateTime.now().plusDays(1));
+            launch.setStatus(new Launch.Status());
+            launch.getStatus().setStatusDescription("Go for launch");
+        }
         return launches;
     }
 
+    private String getSenderAddress() {
+        return senderAddress;
+    }
 }

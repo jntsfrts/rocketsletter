@@ -1,10 +1,6 @@
 package br.com.rocketsletter.user.impl;
 
-import br.com.rocketsletter.user.Email;
-import br.com.rocketsletter.user.User;
-import br.com.rocketsletter.user.UserAlreadyExistsException;
-import br.com.rocketsletter.user.UserDAO;
-import br.com.rocketsletter.user.UserRowMapper;
+import br.com.rocketsletter.user.*;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -24,18 +20,12 @@ public class UserDataAccessService implements UserDAO {
     }
 
     @Override
-    public User saveUser(User user) throws DataAccessException, UserAlreadyExistsException {
+    public User saveUser(User user) throws DataAccessException {
 
-        User result = findBy(user.getEmail());
+        var sql = "INSERT INTO user(ID, EMAIL_ADDRESS, CREATED_AT) VALUES(DEFAULT, ?, ?) ";
+        jdbcTemplate.update(sql, user.getEmail().getAddress(), user.getCreatedAtInTimestamp());
 
-        if(result.getId() == null) {
-            var sql = "INSERT INTO user(ID, EMAIL_ADDRESS, CREATED_AT) VALUES(DEFAULT, ?, ?) ";
-            jdbcTemplate.update(sql, user.getEmail().getAddress(), user.getCreatedAtInTimestamp());
-
-            return user;
-        }
-
-        throw new UserAlreadyExistsException(user);
+        return user;
     }
 
     @Override
@@ -48,7 +38,7 @@ public class UserDataAccessService implements UserDAO {
         );
     }
 
-    public User findBy(Email email) {
+    public User findBy(Email email) throws UserNotFoundException {
         var sql = "SELECT id, email_address, created_at FROM user WHERE email_address = ? ";
 
         try {
@@ -57,7 +47,7 @@ public class UserDataAccessService implements UserDAO {
                     email.getAddress());
 
         } catch (EmptyResultDataAccessException exception) {
-            return new User();
+            throw new UserNotFoundException();
         }
     }
 

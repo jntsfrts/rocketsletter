@@ -16,17 +16,18 @@ public class UserController {
     @Autowired
     private UserMapper mapper;
 
+
     @PostMapping("/new")
     public ResponseEntity<UserResponseDTO> addUser(@RequestBody UserCreationDTO userCreationDTO) {
 
         try {
             User user = service.saveUser(mapper.toUser(userCreationDTO));
             return new ResponseEntity<>(mapper.toDTO(user), HttpStatus.CREATED);
+
         } catch (DataAccessException | UserAlreadyExistsException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
     }
 
     /*
@@ -35,6 +36,7 @@ public class UserController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity deleteUser(@PathVariable Integer id) {
+
         return service.deleteUser(id);
     }
 }

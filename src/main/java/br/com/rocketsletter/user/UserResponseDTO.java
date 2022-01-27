@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class UserResponseDTO {
 
+    private Integer id;
     private String email;
     private final LocalDateTime createdAt;
 

@@ -11,10 +11,6 @@ public class User {
     private LocalDateTime createdAt;
 
 
-    public User() {
-
-    }
-
     public User(Integer id, Email email) {
         this.id = id;
         this.email = email;

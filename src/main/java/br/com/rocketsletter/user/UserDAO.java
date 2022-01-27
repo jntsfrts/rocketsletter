@@ -10,4 +10,5 @@ public interface UserDAO {
     User saveUser(User user);
     List<User> findAll();
     ResponseEntity deleteUser(Integer id);
+    User findBy(Email email);
 }
