@@ -1,10 +1,10 @@
-package br.com.rocketsletter.infrastructure.persistence.impl;
+package br.com.rocketsletter.repository.impl;
 
-import br.com.rocketsletter.domain.model.Email;
-import br.com.rocketsletter.domain.model.User;
-import br.com.rocketsletter.application.exception.UserNotFoundException;
-import br.com.rocketsletter.infrastructure.persistence.mappers.UserRowMapper;
-import br.com.rocketsletter.infrastructure.persistence.UserDAO;
+import br.com.rocketsletter.model.Email;
+import br.com.rocketsletter.model.User;
+import br.com.rocketsletter.service.exception.UserNotFoundException;
+import br.com.rocketsletter.repository.mappers.UserRowMapper;
+import br.com.rocketsletter.repository.UserDAO;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;

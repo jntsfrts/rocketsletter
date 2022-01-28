@@ -1,6 +1,6 @@
-package br.com.rocketsletter.application.exception;
+package br.com.rocketsletter.service.exception;
 
-import br.com.rocketsletter.domain.model.User;
+import br.com.rocketsletter.model.User;
 
 public class UserAlreadyExistsException extends RuntimeException {
 

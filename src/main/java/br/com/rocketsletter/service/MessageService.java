@@ -1,9 +1,9 @@
-package br.com.rocketsletter.application.service;
+package br.com.rocketsletter.service;
 
-import br.com.rocketsletter.domain.model.Launch;
-import br.com.rocketsletter.application.exception.NoLaunchTodayException;
-import br.com.rocketsletter.domain.model.Email;
-import br.com.rocketsletter.domain.model.User;
+import br.com.rocketsletter.model.Launch;
+import br.com.rocketsletter.service.exception.NoLaunchTodayException;
+import br.com.rocketsletter.model.Email;
+import br.com.rocketsletter.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;

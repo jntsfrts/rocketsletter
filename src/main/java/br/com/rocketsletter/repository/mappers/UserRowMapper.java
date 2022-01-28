@@ -1,7 +1,7 @@
-package br.com.rocketsletter.infrastructure.persistence.mappers;
+package br.com.rocketsletter.repository.mappers;
 
-import br.com.rocketsletter.domain.model.Email;
-import br.com.rocketsletter.domain.model.User;
+import br.com.rocketsletter.model.Email;
+import br.com.rocketsletter.model.User;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

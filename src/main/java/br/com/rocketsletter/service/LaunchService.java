@@ -1,8 +1,8 @@
-package br.com.rocketsletter.application.service;
+package br.com.rocketsletter.service;
 
-import br.com.rocketsletter.domain.dto.UpcomingLaunchesResponse;
-import br.com.rocketsletter.domain.model.Launch;
-import br.com.rocketsletter.application.exception.NoLaunchTodayException;
+import br.com.rocketsletter.model.dto.UpcomingLaunchesResponse;
+import br.com.rocketsletter.model.Launch;
+import br.com.rocketsletter.service.exception.NoLaunchTodayException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

@@ -1,4 +1,4 @@
-package br.com.rocketsletter.application.exception;
+package br.com.rocketsletter.service.exception;
 
 public class NoLaunchTodayException extends Exception {
 

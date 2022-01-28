@@ -1,6 +1,6 @@
-package br.com.rocketsletter.domain.model;
+package br.com.rocketsletter.model;
 
-import br.com.rocketsletter.application.exception.InvalidEmailException;
+import br.com.rocketsletter.service.exception.InvalidEmailException;
 
 public class Email {
 

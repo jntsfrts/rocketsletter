@@ -1,7 +1,7 @@
-package br.com.rocketsletter.domain.dto;
+package br.com.rocketsletter.model.dto;
 
-import br.com.rocketsletter.domain.model.Email;
-import br.com.rocketsletter.domain.model.User;
+import br.com.rocketsletter.model.Email;
+import br.com.rocketsletter.model.User;
 import org.springframework.stereotype.Component;
 
 @Component

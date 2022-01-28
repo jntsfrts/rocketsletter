@@ -1,4 +1,4 @@
-package br.com.rocketsletter.infrastructure.config;
+package br.com.rocketsletter.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

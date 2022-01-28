@@ -1,6 +1,6 @@
-package br.com.rocketsletter.domain.dto;
+package br.com.rocketsletter.model.dto;
 
-import br.com.rocketsletter.domain.model.Launch;
+import br.com.rocketsletter.model.Launch;
 import com.fasterxml.jackson.annotation.JsonAlias;
 
 import java.util.List;

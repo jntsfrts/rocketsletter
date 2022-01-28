@@ -1,7 +1,7 @@
-package br.com.rocketsletter.infrastructure.persistence;
+package br.com.rocketsletter.repository;
 
-import br.com.rocketsletter.domain.model.Email;
-import br.com.rocketsletter.domain.model.User;
+import br.com.rocketsletter.model.Email;
+import br.com.rocketsletter.model.User;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package br.com.rocketsletter.domain.model;
+package br.com.rocketsletter.model;
 
 import java.time.LocalDateTime;
 
