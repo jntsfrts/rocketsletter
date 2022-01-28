@@ -1,4 +1,6 @@
-package br.com.rocketsletter.user;
+package br.com.rocketsletter.domain.model;
+
+import br.com.rocketsletter.application.exception.InvalidEmailException;
 
 public class Email {
 

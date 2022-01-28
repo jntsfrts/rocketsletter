@@ -1,4 +1,4 @@
-package br.com.rocketsletter.user;
+package br.com.rocketsletter.domain.dto;
 
 public class UserCreationDTO {
 

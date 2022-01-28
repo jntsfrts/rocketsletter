@@ -1,4 +1,4 @@
-package br.com.rocketsletter.launch;
+package br.com.rocketsletter.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 

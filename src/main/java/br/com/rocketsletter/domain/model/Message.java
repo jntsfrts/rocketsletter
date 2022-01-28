@@ -1,10 +1,6 @@
-package br.com.rocketsletter.message;
-
-import br.com.rocketsletter.launch.Launch;
-import br.com.rocketsletter.user.User;
+package br.com.rocketsletter.domain.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class Message {
 

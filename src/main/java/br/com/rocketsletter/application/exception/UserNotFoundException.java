@@ -1,4 +1,4 @@
-package br.com.rocketsletter.user;
+package br.com.rocketsletter.application.exception;
 
 public class UserNotFoundException extends RuntimeException {
 

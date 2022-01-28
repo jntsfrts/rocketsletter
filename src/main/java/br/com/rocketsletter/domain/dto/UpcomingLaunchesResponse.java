@@ -1,10 +1,11 @@
-package br.com.rocketsletter.launch;
+package br.com.rocketsletter.domain.dto;
 
+import br.com.rocketsletter.domain.model.Launch;
 import com.fasterxml.jackson.annotation.JsonAlias;
 
 import java.util.List;
 
-class UpcomingLaunchesResponse {
+public class UpcomingLaunchesResponse {
 
     private Integer count;
     @JsonAlias("results")

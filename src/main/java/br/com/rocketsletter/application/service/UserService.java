@@ -1,5 +1,8 @@
-package br.com.rocketsletter.user;
+package br.com.rocketsletter.application.service;
 
+import br.com.rocketsletter.domain.model.User;
+import br.com.rocketsletter.application.exception.UserAlreadyExistsException;
+import br.com.rocketsletter.infrastructure.persistence.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

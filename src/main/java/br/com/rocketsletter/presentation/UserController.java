@@ -1,5 +1,11 @@
-package br.com.rocketsletter.user;
+package br.com.rocketsletter.presentation;
 
+import br.com.rocketsletter.application.service.UserService;
+import br.com.rocketsletter.domain.model.User;
+import br.com.rocketsletter.application.exception.UserAlreadyExistsException;
+import br.com.rocketsletter.domain.dto.UserCreationDTO;
+import br.com.rocketsletter.domain.dto.UserMapper;
+import br.com.rocketsletter.domain.dto.UserResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;

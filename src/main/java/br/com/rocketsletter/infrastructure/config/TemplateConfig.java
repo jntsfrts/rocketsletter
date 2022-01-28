@@ -1,4 +1,4 @@
-package br.com.rocketsletter.config;
+package br.com.rocketsletter.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

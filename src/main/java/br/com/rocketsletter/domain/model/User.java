@@ -1,4 +1,4 @@
-package br.com.rocketsletter.user;
+package br.com.rocketsletter.domain.model;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
