@@ -1,6 +1,6 @@
 package br.com.rocketsletter.service;
 
-import br.com.rocketsletter.model.dto.UpcomingLaunchesResponse;
+import br.com.rocketsletter.dto.UpcomingLaunchesResponse;
 import br.com.rocketsletter.model.Launch;
 import br.com.rocketsletter.service.exception.NoLaunchTodayException;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +45,7 @@ public class LaunchService {
         return Objects.requireNonNull(response.getBody()).getLaunches();
     }
 
+    //TODO Voltar a validar com os filtros reais após teste
     private List<Launch> filterLaunchesOfTheDay(List<Launch> launches) {
 
         List<Launch> todaysLaunches = new ArrayList<>();

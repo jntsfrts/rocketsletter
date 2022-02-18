@@ -3,9 +3,9 @@ package br.com.rocketsletter.controller;
 import br.com.rocketsletter.service.UserService;
 import br.com.rocketsletter.model.User;
 import br.com.rocketsletter.service.exception.UserAlreadyExistsException;
-import br.com.rocketsletter.model.dto.UserCreationDTO;
-import br.com.rocketsletter.model.dto.UserMapper;
-import br.com.rocketsletter.model.dto.UserResponseDTO;
+import br.com.rocketsletter.dto.UserCreationDTO;
+import br.com.rocketsletter.dto.UserMapper;
+import br.com.rocketsletter.dto.UserResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -36,10 +36,6 @@ public class UserController {
         }
     }
 
-    /*
-    A ideia é essa URL funcionar com um botao 'unsubscribe'
-    contendo um ID que acompanhará o email diário.
-     */
     @DeleteMapping("/{id}")
     public ResponseEntity deleteUser(@PathVariable Integer id) {
 

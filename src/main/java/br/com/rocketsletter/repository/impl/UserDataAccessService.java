@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class UserDataAccessService implements UserDAO {
+class UserDataAccessService implements UserDAO {
 
     private final JdbcTemplate jdbcTemplate;
 
