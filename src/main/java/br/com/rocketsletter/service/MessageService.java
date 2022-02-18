@@ -16,7 +16,6 @@ import java.util.List;
 @Service
 public class MessageService {
 
-    @Autowired
     private final JavaMailSender mailSender;
 
     @Value("${spring.mail.username}")
@@ -27,20 +26,15 @@ public class MessageService {
         this.mailSender = mailSender;
     }
 
-    public void sendMessage(
-            List<User> recipients, String htmlBody) throws MessagingException {
-
-//        Map<String, Object> templateModel = getUpcomingLaunchesTemplateModel(launchesOfTheDay);
-//        Context thymeleafContext = new Context();
-//        thymeleafContext.setVariables(templateModel);
-//        String htmlBody = thymeleafTemplateEngine.process(
-//                "daily-email-template.html", thymeleafContext);
+    public void sendMessage(List<User> recipients, String htmlBody) throws MessagingException {
 
         for(User recipient : recipients) {
             sendHtmlMessage(recipient.getEmail(),
                     "Próximos Lançamentos de Veículos Espaciais | "
                             + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                     htmlBody);
+
+            System.out.format("Mensagem enviada para %s .", recipient.getEmail());
         }
     }
 
@@ -55,8 +49,6 @@ public class MessageService {
 
         mailSender.send(message);
     }
-
-
 
     private String getSenderAddress() {
         return senderAddress;

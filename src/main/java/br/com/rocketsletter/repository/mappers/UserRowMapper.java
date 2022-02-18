@@ -2,6 +2,7 @@ package br.com.rocketsletter.repository.mappers;
 
 import br.com.rocketsletter.dto.UserResponseDTO;
 import br.com.rocketsletter.model.User;
+import br.com.rocketsletter.model.UserMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -13,13 +14,11 @@ public class UserRowMapper implements RowMapper<User> {
     public User mapRow(ResultSet resultSet, int rowNum) throws SQLException {
 
         UserResponseDTO userResponseDTO = new UserResponseDTO(
-                resultSet.getInt("id"),
+                resultSet.getString("user_id"),
                 resultSet.getString("email_address"),
                 resultSet.getTimestamp("created_at").toLocalDateTime()
         );
 
-        User user = new User();
-        BeanUtils.copyProperties(userResponseDTO, user);
-        return user;
+        return UserMapper.toUser(userResponseDTO);
     }
 }

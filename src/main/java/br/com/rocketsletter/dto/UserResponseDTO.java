@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public class UserResponseDTO {
 
-    private Integer id;
+    private String id;
     private String email;
     private final LocalDateTime createdAt;
 
@@ -14,7 +14,7 @@ public class UserResponseDTO {
         this.createdAt = null;
     }
 
-    public UserResponseDTO(Integer id, String email, LocalDateTime createdAt) {
+    public UserResponseDTO(String id, String email, LocalDateTime createdAt) {
         this.id = id;
         this.email = email;
         this.createdAt = createdAt;
@@ -25,11 +25,15 @@ public class UserResponseDTO {
         this.createdAt = user.getCreatedAt();
     }
 
+    public String getId() {
+        return id;
+    }
+
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 }

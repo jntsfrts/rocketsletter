@@ -6,7 +6,6 @@ import br.com.rocketsletter.service.exception.InvalidEmailException;
 import br.com.rocketsletter.service.exception.UserAlreadyExistsException;
 import br.com.rocketsletter.dto.UserCreationDTO;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.FatalBeanException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +16,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
     private UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping
     public ResponseEntity<Object> saveUser(@RequestBody UserCreationDTO userCreationDTO) {

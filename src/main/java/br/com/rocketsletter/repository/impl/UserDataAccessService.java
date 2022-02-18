@@ -12,6 +12,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.TemporalAccessor;
 import java.util.List;
 
 @Repository
@@ -26,15 +29,15 @@ class UserDataAccessService implements UserDAO {
     @Override
     public User saveUser(User user) throws DataAccessException {
 
-        var sql = "INSERT INTO user(ID, EMAIL_ADDRESS, CREATED_AT) VALUES(DEFAULT, ?, ?) ";
-        jdbcTemplate.update(sql, user.getEmail(), Timestamp.valueOf(user.getCreatedAt()));
+        var sql = "INSERT INTO \"user\"(USER_ID, EMAIL_ADDRESS, CREATED_AT) VALUES(DEFAULT, ?, ?) ";
+        jdbcTemplate.update(sql, user.getEmail(), Timestamp.valueOf(LocalDateTime.now()));
 
         return user;
     }
 
     @Override
     public List<User> findAll() {
-        var sql = "SELECT id, email_address, created_at FROM user ";
+        var sql = "SELECT user_id, email_address, created_at FROM \"user\" ";
 
         return jdbcTemplate.query(
                 sql, (resultSet, rowNum) ->
@@ -44,7 +47,7 @@ class UserDataAccessService implements UserDAO {
 
     @Override
     public boolean existsUserWith(String email) {
-        var sql = "SELECT COUNT(*) FROM user WHERE email_address = ? ";
+        var sql = "SELECT COUNT(*) FROM \"user\" u WHERE u.email_address = ? ";
 
         Integer result = jdbcTemplate.queryForObject(sql, Integer.class, email);
         return result != null && result > 0;
@@ -52,7 +55,7 @@ class UserDataAccessService implements UserDAO {
 
     @Override
     public ResponseEntity deleteUser(Integer id) {
-        var sql = "DELETE FROM user u WHERE u.ID = ? ";
+        var sql = "DELETE FROM \"user\" u WHERE u.ID = ? ";
         int rowsAffected = jdbcTemplate.update(sql, id);
 
         if(rowsAffected == 1)
