@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 
 import java.util.List;
 
-public class UpcomingLaunchesResponse {
+public class UpcomingLaunchesResponseDTO {
 
     private Integer count;
     @JsonAlias("results")

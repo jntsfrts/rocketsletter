@@ -14,8 +14,14 @@ public class UserResponseDTO {
         this.createdAt = null;
     }
 
+    public UserResponseDTO(Integer id, String email, LocalDateTime createdAt) {
+        this.id = id;
+        this.email = email;
+        this.createdAt = createdAt;
+    }
+
     public UserResponseDTO(User user) {
-        this.email = user.getEmail().getAddress();
+        this.email = user.getEmail();
         this.createdAt = user.getCreatedAt();
     }
 

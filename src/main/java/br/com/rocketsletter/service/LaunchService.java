@@ -1,6 +1,6 @@
 package br.com.rocketsletter.service;
 
-import br.com.rocketsletter.dto.UpcomingLaunchesResponse;
+import br.com.rocketsletter.dto.UpcomingLaunchesResponseDTO;
 import br.com.rocketsletter.model.Launch;
 import br.com.rocketsletter.service.exception.NoLaunchTodayException;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +40,7 @@ public class LaunchService {
                 .queryParam("ordering", "windows_start")
                 .build();
 
-        ResponseEntity<UpcomingLaunchesResponse> response = restTemplate.getForEntity(uri.toUriString(), UpcomingLaunchesResponse.class);
+        ResponseEntity<UpcomingLaunchesResponseDTO> response = restTemplate.getForEntity(uri.toUriString(), UpcomingLaunchesResponseDTO.class);
 
         return Objects.requireNonNull(response.getBody()).getLaunches();
     }

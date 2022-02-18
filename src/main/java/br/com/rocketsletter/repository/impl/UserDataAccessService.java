@@ -1,6 +1,5 @@
 package br.com.rocketsletter.repository.impl;
 
-import br.com.rocketsletter.model.Email;
 import br.com.rocketsletter.model.User;
 import br.com.rocketsletter.service.exception.UserNotFoundException;
 import br.com.rocketsletter.repository.mappers.UserRowMapper;
@@ -12,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -27,7 +27,7 @@ class UserDataAccessService implements UserDAO {
     public User saveUser(User user) throws DataAccessException {
 
         var sql = "INSERT INTO user(ID, EMAIL_ADDRESS, CREATED_AT) VALUES(DEFAULT, ?, ?) ";
-        jdbcTemplate.update(sql, user.getEmail().getAddress(), user.getCreatedAtInTimestamp());
+        jdbcTemplate.update(sql, user.getEmail(), Timestamp.valueOf(user.getCreatedAt()));
 
         return user;
     }
@@ -42,17 +42,12 @@ class UserDataAccessService implements UserDAO {
         );
     }
 
-    public User findBy(Email email) throws UserNotFoundException {
-        var sql = "SELECT id, email_address, created_at FROM user WHERE email_address = ? ";
+    @Override
+    public boolean existsUserWith(String email) {
+        var sql = "SELECT COUNT(*) FROM user WHERE email_address = ? ";
 
-        try {
-            return jdbcTemplate.queryForObject(sql, (resultSet, rowNum) ->
-                    new UserRowMapper().mapRow(resultSet, rowNum),
-                    email.getAddress());
-
-        } catch (EmptyResultDataAccessException exception) {
-            throw new UserNotFoundException();
-        }
+        Integer result = jdbcTemplate.queryForObject(sql, Integer.class, email);
+        return result != null && result > 0;
     }
 
     @Override

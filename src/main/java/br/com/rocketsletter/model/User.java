@@ -1,55 +1,33 @@
 package br.com.rocketsletter.model;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Objects;
 
 public class User {
 
     private Integer id;
-    private Email email;
+    private String email;
     private LocalDateTime createdAt;
 
-
-    public User(Integer id, Email email) {
-        this.id = id;
-        this.email = email;
-        this.createdAt = LocalDateTime.now();
-    }
-
-    //TODO: Separar entidade user para um dto
-    public User(Integer id, Email email, LocalDateTime createdAt) {
-        this.id = id;
-        this.email = email;
-        this.createdAt = createdAt;
-    }
-
-    public User(Email email) {
-        this.email = email;
+    public User() {
+        this.createdAt = LocalDateTime.now(ZoneId.of("UTC"));
     }
 
     public Integer getId() {
         return id;
     }
 
-     public Email getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(Email email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Timestamp getCreatedAtInTimestamp() {
-        return Timestamp.valueOf(createdAt);
     }
 
     @Override

@@ -37,7 +37,7 @@ public class MessageService {
 //                "daily-email-template.html", thymeleafContext);
 
         for(User recipient : recipients) {
-            sendHtmlMessage(recipient.getEmail().getAddress(),
+            sendHtmlMessage(recipient.getEmail(),
                     "Próximos Lançamentos de Veículos Espaciais | "
                             + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                     htmlBody);

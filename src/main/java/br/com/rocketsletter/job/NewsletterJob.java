@@ -1,6 +1,5 @@
 package br.com.rocketsletter.job;
 
-import br.com.rocketsletter.model.Email;
 import br.com.rocketsletter.model.EmailTemplate;
 import br.com.rocketsletter.model.Launch;
 import br.com.rocketsletter.model.User;
@@ -9,9 +8,6 @@ import br.com.rocketsletter.service.MessageService;
 import br.com.rocketsletter.service.UserService;
 import br.com.rocketsletter.service.exception.NoLaunchTodayException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.scheduling.annotation.Schedules;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -35,7 +31,7 @@ public class NewsletterJob {
 
 
     //@Scheduled(cron = "42 06 07 * * MON-FRI")
-    @Scheduled(cron = "*/4 * * * * MON-FRI" )
+    //@Scheduled(cron = "*/4 * * * * MON-FRI" )
     public void sendDailyMessage() {
 
         List<Launch> launches;
@@ -49,7 +45,7 @@ public class NewsletterJob {
         //List<User> recipients = userService.findAll();
 
         List<User> recipients = new ArrayList<>();
-        recipients.add(new User(1, new Email("jonatasfreitas20@gmail.com")));
+        //recipients.add(new User(1, new Email("jonatasfreitas20@gmail.com")));
 
         if(recipients.isEmpty() || recipients.equals(null))
             return;
@@ -63,6 +59,6 @@ public class NewsletterJob {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-        System.out.println("Mensagem enviada para " + recipients.get(0).getEmail().getAddress() + ".");
+        System.out.println("Mensagem enviada para " + recipients.get(0).getEmail() + ".");
     }
 }
