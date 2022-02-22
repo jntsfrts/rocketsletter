@@ -68,7 +68,7 @@ class UserDataAccessService implements UserDAO {
     @Override
     public Integer deleteUser(String id) {
 
-        var sql = "DELETE FROM \"user\" u WHERE u.USER_ID = '" + id +"'";
+        var sql = "DELETE FROM \"user\" u WHERE u.USER_ID = '" +id +"'";
 
         int rowsAffected = jdbcTemplate.update(sql);
 
