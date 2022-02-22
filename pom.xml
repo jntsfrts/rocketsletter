@@ -14,7 +14,6 @@
 	<name>Rocketsletter</name>
 	<description>Newsletter to send info about upcoming rocket launches.</description>
 	<properties>
-		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
