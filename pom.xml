@@ -12,6 +12,7 @@
 	<artifactId>rocketsletter</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Rocketsletter</name>
+	<packaging>jar</packaging>
 	<description>Newsletter to send info about upcoming rocket launches.</description>
 	<properties>
 	</properties>
