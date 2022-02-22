@@ -1,20 +1,19 @@
 package br.com.rocketsletter.repository.impl;
 
+import br.com.rocketsletter.dto.UserResponseDTO;
 import br.com.rocketsletter.model.User;
+import br.com.rocketsletter.model.UserMapper;
 import br.com.rocketsletter.service.exception.UserNotFoundException;
 import br.com.rocketsletter.repository.mappers.UserRowMapper;
 import br.com.rocketsletter.repository.UserDAO;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.temporal.TemporalAccessor;
 import java.util.List;
 
 @Repository
@@ -29,10 +28,23 @@ class UserDataAccessService implements UserDAO {
     @Override
     public User saveUser(User user) throws DataAccessException {
 
-        var sql = "INSERT INTO \"user\"(USER_ID, EMAIL_ADDRESS, CREATED_AT) VALUES(DEFAULT, ?, ?) ";
-        jdbcTemplate.update(sql, user.getEmail(), Timestamp.valueOf(LocalDateTime.now()));
+        KeyHolder keyHolder = new GeneratedKeyHolder();
 
-        return user;
+        var sql = "INSERT INTO \"user\"(USER_ID, EMAIL_ADDRESS, CREATED_AT) VALUES(DEFAULT, ?, ?) ";
+
+        jdbcTemplate.update(sql, user.getEmail(), Timestamp.valueOf(user.getCreatedAt()));
+        jdbcTemplate.update(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, new String[] {"user_id"});
+            preparedStatement.setString(1, user.getEmail());
+            preparedStatement.setTimestamp(2, Timestamp.valueOf(user.getCreatedAt()));
+
+            return preparedStatement;
+        }, keyHolder);
+
+        String generatedId = keyHolder.getKeys().get("USER_ID").toString();
+        UserResponseDTO dto = new UserResponseDTO(generatedId, user.getEmail(), user.getCreatedAt());
+
+        return UserMapper.toUser(dto);
     }
 
     @Override
@@ -54,14 +66,16 @@ class UserDataAccessService implements UserDAO {
     }
 
     @Override
-    public ResponseEntity deleteUser(Integer id) {
-        var sql = "DELETE FROM \"user\" u WHERE u.ID = ? ";
-        int rowsAffected = jdbcTemplate.update(sql, id);
+    public Integer deleteUser(String id) {
+
+        var sql = "DELETE FROM \"user\" u WHERE u.USER_ID = '" + id +"'";
+
+        int rowsAffected = jdbcTemplate.update(sql);
 
         if(rowsAffected == 1)
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return rowsAffected;
 
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
+        throw new UserNotFoundException();
     }
 
 

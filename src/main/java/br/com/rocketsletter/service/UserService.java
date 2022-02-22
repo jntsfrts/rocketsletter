@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,6 +28,8 @@ public class UserService {
         if(userDAO.existsUserWith(user.getEmail()))
             throw new UserAlreadyExistsException();
 
+        user.setCreatedAt(LocalDateTime.now());
+
         return userDAO.saveUser(user);
     }
 
@@ -34,13 +37,13 @@ public class UserService {
         return userDAO.findAll();
     }
 
-    public ResponseEntity deleteUser(Integer id) {
+    public Integer deleteUser(String id) {
         return userDAO.deleteUser(id);
     }
 
     private boolean isEmailValid(String emailAddress) {
         return emailAddress.matches("^([a-z0-9]+(?:[._-][a-z0-9]+)*)@([a-z0-9]+(?:[.-][a-z0-9]+)*\\.[a-z]{2,})$")
-                && !emailAddress.equals(null)
+                && emailAddress != null
                 && !emailAddress.isBlank();
     }
 }

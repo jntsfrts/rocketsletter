@@ -30,8 +30,7 @@ public class NewsletterJob {
     private EmailTemplate template;
 
 
-    //@Scheduled(cron = "42 06 07 * * MON-FRI")
-    @Scheduled(cron = "*/8 * * * * MON-FRI" )
+    @Scheduled(cron = "42 06 07 * * MON-FRI")
     public void sendDailyMessage() {
 
         List<Launch> launches;
@@ -44,7 +43,7 @@ public class NewsletterJob {
         }
         List<User> recipients = userService.findAll();
 
-        if(recipients.isEmpty() || recipients.equals(null))
+        if(recipients.isEmpty())
             return;
 
         String htmlBody = template.getUpcomingLaunchesTemplateModel(launches);
