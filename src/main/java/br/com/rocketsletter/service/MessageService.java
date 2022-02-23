@@ -16,6 +16,7 @@ import java.util.List;
 @Service
 public class MessageService {
 
+    @Autowired
     private final JavaMailSender mailSender;
 
     @Value("${spring.mail.username}")
