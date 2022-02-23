@@ -33,6 +33,7 @@ public class JavaMailSenderConfig {
         props.put("mail.smtp.writetimeout","5000");
         props.put("mail.smtp.starttls.enable", "true");
 
+
         return mailSender;
     }
 
