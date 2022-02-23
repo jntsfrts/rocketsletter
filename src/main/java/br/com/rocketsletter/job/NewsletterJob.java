@@ -30,7 +30,7 @@ public class NewsletterJob {
     private EmailTemplate template;
 
 
-    @Scheduled(cron = "*/4 * * * * MON-FRI" )
+    @Scheduled(cron = "*/30 * * * * MON-FRI" )
     public void sendDailyMessage() {
 
         List<Launch> launches;
