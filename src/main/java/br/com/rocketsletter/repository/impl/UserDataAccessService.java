@@ -32,7 +32,6 @@ class UserDataAccessService implements UserDAO {
 
         var sql = "INSERT INTO \"user\"(USER_ID, EMAIL_ADDRESS, CREATED_AT) VALUES(DEFAULT, ?, ?) ";
 
-        jdbcTemplate.update(sql, user.getEmail(), Timestamp.valueOf(user.getCreatedAt()));
         jdbcTemplate.update(connection -> {
             PreparedStatement preparedStatement = connection.prepareStatement(sql, new String[] {"user_id"});
             preparedStatement.setString(1, user.getEmail());
