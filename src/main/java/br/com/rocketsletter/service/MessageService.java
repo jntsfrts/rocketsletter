@@ -2,7 +2,6 @@ package br.com.rocketsletter.service;
 
 import br.com.rocketsletter.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -19,8 +18,7 @@ public class MessageService {
     @Autowired
     private final JavaMailSender mailSender;
 
-    @Value("${spring.mail.username}")
-    private String senderAddress;
+    private String senderAddress = "rocketsletter@gmail.com";
 
 
     public MessageService(JavaMailSender mailSender) {
