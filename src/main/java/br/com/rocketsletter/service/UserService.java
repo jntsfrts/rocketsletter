@@ -42,6 +42,6 @@ public class UserService {
     private boolean isEmailValid(String emailAddress) {
         return emailAddress.matches("^([a-z0-9]+(?:[._-][a-z0-9]+)*)@([a-z0-9]+(?:[.-][a-z0-9]+)*\\.[a-z]{2,})$")
                 && emailAddress != null
-                && !emailAddress.isBlank();
+                && emailAddress != "";
     }
 }
