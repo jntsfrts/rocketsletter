@@ -51,14 +51,11 @@ public class LaunchService {
         List<Launch> todaysLaunches = new ArrayList<>();
         LocalDateTime today = LocalDateTime.now();
 
-//        launches.forEach(launch -> {
-//            if(launch.getWindowStart().toLocalDate().equals(today.toLocalDate())) {
-//                todaysLaunches.add(launch);
-//            }
-//        });
-
-        todaysLaunches.add(launches.get(0));
-        todaysLaunches.add(launches.get(1));
+        launches.forEach(launch -> {
+            if(launch.getWindowStart().toLocalDate().equals(today.toLocalDate())) {
+                todaysLaunches.add(launch);
+            }
+        });
 
         return todaysLaunches;
     }
