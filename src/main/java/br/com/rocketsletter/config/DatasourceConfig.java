@@ -1,13 +1,11 @@
 package br.com.rocketsletter.config;
 
 import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
-@ConfigurationProperties("spring.datasource")
 public class DatasourceConfig {
 
     private String jdbcUrl;
@@ -18,9 +16,9 @@ public class DatasourceConfig {
     public HikariDataSource hikariDataSource() {
 
         HikariDataSource datasource = new HikariDataSource();
-        datasource.setJdbcUrl(getJdbcUrl());
-        datasource.setUsername(getUsername());
-        datasource.setPassword(getPassword());
+        datasource.setJdbcUrl(System.getenv("JDBC_DATABASE_URL"));
+        datasource.setUsername(System.getenv("JDBC_DATABASE_USERNAME"));
+        datasource.setPassword(System.getenv("JDBC_DATABASE_PASSWORD"));
 
         return datasource;
     }
