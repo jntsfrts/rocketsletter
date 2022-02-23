@@ -62,7 +62,8 @@ class UserDataAccessService implements UserDAO {
         var sql = "SELECT COUNT(*) FROM \"user\" u WHERE u.email_address = ? ";
 
         Integer result = jdbcTemplate.queryForObject(sql, Integer.class, email);
-        return result != null && result > 0;
+
+        return result > 0;
     }
 
     @Override
